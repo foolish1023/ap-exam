@@ -2433,7 +2433,7 @@
       <button class="pill ${state.selectedChapter === opt.v ? 'active' : ''}" data-chapter="${opt.v}">${opt.label}</button>
     `).join('');
 
-    const lastTopic = state.lastTopic ? LESSONS.find(l => l.id === state.lastTopic) : null;
+    const lastTopic = state.lastTopic ? LESSONS.find(l => l.id === Number(state.lastTopic)) : null;
     const continueHtml = lastTopic ? `
       <button class="continue-card" id="btn-continue">
         <div class="icon">
@@ -2784,11 +2784,13 @@
 
   function renderLesson(topicId) {
     stopTimer();
-    const topic = LESSONS.find(l => l.id === topicId);
+    // dataset属性から渡されたIDは文字列のため、ここで数値に正規化する
+    const id = typeof topicId === 'number' ? topicId : Number(topicId);
+    const topic = LESSONS.find(l => l.id === id);
     if (!topic) { renderLearnHome(); return; }
     setChapterIndicator(CHAPTER_SHORT[topic.chapter] || CHAPTER_NAMES[topic.chapter], topic.chapter);
 
-    const idx = LESSONS.filter(l => l.chapter === topic.chapter).findIndex(l => l.id === topicId);
+    const idx = LESSONS.filter(l => l.chapter === topic.chapter).findIndex(l => l.id === id);
     const chapterTopics = LESSONS.filter(l => l.chapter === topic.chapter);
     const prev = idx > 0 ? chapterTopics[idx - 1] : null;
     const next = idx < chapterTopics.length - 1 ? chapterTopics[idx + 1] : null;
