@@ -1,6 +1,6 @@
 // 応用情報技術者試験 — Service Worker
 // キャッシュ戦略: HTMLはnetwork-first（更新を素早く反映）、アセットはcache-first
-const VERSION = 'v1.0.0';
+const VERSION = 'v1.0.1';
 const CACHE = `ap-exam-${VERSION}`;
 const ASSETS = [
   './',
